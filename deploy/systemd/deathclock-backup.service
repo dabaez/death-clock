@@ -1,0 +1,16 @@
+# Copies the database to %h/backups/ (newest 30 kept). Started by
+# deathclock-backup.timer.
+#
+# Logs, as root: journalctl _SYSTEMD_USER_UNIT=deathclock-backup.service
+
+[Unit]
+Description=The Death Clock: back up the database
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/current/app
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=NODE_ENV=production
+Environment=DB_PATH=%h/data/deathclock.db
+ExecStart=/usr/bin/env node scripts/backup.js %h/backups
+TimeoutStartSec=10min

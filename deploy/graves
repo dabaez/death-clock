@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# graves — the admin CLI (scripts/graves.js) on the droplet, with the same
+# database as deploy/systemd/deathclock.service. Run it as the site user,
+# e.g. from root:
+#
+#   sudo -u deathclock /srv/sites/deathclock/current/app/deploy/graves list --limit 50
+#   sudo -u deathclock /srv/sites/deathclock/current/app/deploy/graves delete <id>
+#   sudo -u deathclock /srv/sites/deathclock/current/app/deploy/graves delete --name "text"
+#
+set -euo pipefail
+
+home="$(getent passwd "$(id -un)" | cut -d: -f6)"
+cd "$home/current/app"
+export PATH=/usr/local/bin:/usr/bin:/bin
+export NODE_ENV=production DB_PATH="$home/data/deathclock.db"
+exec node scripts/graves.js "$@"

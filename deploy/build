@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+# build — builds the Death Clock on the droplet.
+#
+# receive-site (dabaez/droplet-infra) runs this as the deathclock user, from
+# the uploaded source (the release's app/), on every deploy:
+#
+#   deploy/build <out-dir>
+#
+# The site is a server process: there's nothing to compile, but
+# better-sqlite3 is native, so its production node_modules are installed
+# here, in app/, where deploy/systemd/deathclock.service runs server.js.
+# The static pages are copied to <out-dir> (the release's public/) as well,
+# though the server serves them itself.
+#
+set -euo pipefail
+
+OUT="$1"
+
+command -v node >/dev/null || {
+  echo "node isn't on PATH for $(id -un); install Node 22 system-wide" >&2
+  exit 1
+}
+
+# pnpm comes from corepack, at the version in package.json's packageManager.
+export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+mkdir -p "$HOME/.local/bin"
+corepack enable --install-directory "$HOME/.local/bin" pnpm
+export PATH="$HOME/.local/bin:$PATH"
+
+rm -rf node_modules
+CI=true pnpm install --frozen-lockfile --prod
+pnpm store prune >/dev/null 2>&1 || true
+
+# Fail the deploy here, not at startup, if the native module didn't build.
+node -e "new (require('better-sqlite3'))(':memory:').close()"
+
+cp -r public/. "$OUT"/

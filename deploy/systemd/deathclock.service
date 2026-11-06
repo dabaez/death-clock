@@ -1,0 +1,28 @@
+# The Death Clock's server: the pages and the API.
+# A standalone service (no matching .timer), so receive-site enables and
+# restarts it on every deploy, rollback or activate.
+#
+# Logs, as root: journalctl _SYSTEMD_USER_UNIT=deathclock.service
+
+[Unit]
+Description=The Death Clock (deathclock.b4ez.com)
+
+[Service]
+Type=simple
+WorkingDirectory=%h/current/app
+# node has to be installed system-wide, on this PATH.
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=NODE_ENV=production
+Environment=HOST=127.0.0.1
+Environment=PORT=8720
+# The database outlives releases.
+Environment=DB_PATH=%h/data/deathclock.db
+# Only nginx can reach 127.0.0.1:8720, and it sets X-Forwarded-For and
+# X-Forwarded-Proto. Trust them only from localhost.
+Environment=TRUST_PROXY=loopback
+ExecStart=/usr/bin/env node server.js
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

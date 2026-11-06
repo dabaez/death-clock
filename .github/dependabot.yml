@@ -1,0 +1,18 @@
+# Dependabot version updates. Security updates are enabled in the repo settings
+# and ignore the cooldown, so fixes for known vulnerabilities arrive immediately.
+version: 2
+updates:
+  - package-ecosystem: npm # also handles pnpm-lock.yaml
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 5 # wait 5 days after a release before proposing it
+    open-pull-requests-limit: 10
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 5

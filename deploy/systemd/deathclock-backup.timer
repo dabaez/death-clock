@@ -1,0 +1,10 @@
+[Unit]
+Description=The Death Clock: back up the database every 6 hours
+
+[Timer]
+OnCalendar=*-*-* 00/6:23:00
+# If the droplet was off at a scheduled time, run as soon as it's back.
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>☠️ The Death Clock ☠️</title>
+  <meta name="description" content="Answer our questions and find out the date of your death!">
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <main class="box">
+    <!-- 1. Landing -->
+    <section id="screen-landing" class="screen" hidden>
+      <h1>☠️&nbsp;THE DEATH CLOCK&nbsp;☠️</h1>
+      <p class="tagline">🔮 Answer our questions and find out the date of your death 🔮</p>
+      <form id="name-form" novalidate>
+        <label for="name">🕯️ Enter your name:</label>
+        <div class="name-row">
+          <input id="name" name="name" type="text" autocomplete="given-name" maxlength="60" required>
+          <button type="submit" class="btn">Begin</button>
+        </div>
+        <p id="name-error" class="error" role="alert" hidden></p>
+      </form>
+    </section>
+
+    <!-- 2. Question -->
+    <section id="screen-question" class="screen" hidden>
+      <div id="question">
+        <p class="step">Question 1 of 20</p>
+        <h2>Are you a boy or a girl?</h2>
+        <div class="choices">
+          <button type="button" class="btn">Boy</button>
+          <button type="button" class="btn">Girl</button>
+          <button type="button" class="btn">Other</button>
+        </div>
+      </div>
+      <div id="question-error" hidden>
+        <p id="question-error-text" class="error" role="alert"></p>
+        <button type="button" id="try-again" class="btn">Try again</button>
+      </div>
+    </section>
+
+    <!-- 3. Reveal -->
+    <section id="screen-reveal" class="screen" hidden>
+      <p class="reveal"><span id="reveal-name"></span>, you will die in <span id="reveal-seconds"></span>.</p>
+    </section>
+
+    <!-- 4. Tombstone -->
+    <section id="screen-dead" class="screen" hidden>
+      <div id="my-stone"></div>
+      <p id="yard-link" class="center"></p>
+    </section>
+  </main>
+</body>
+</html>

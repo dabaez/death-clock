@@ -1,0 +1,11 @@
+node_modules/
+
+# the local database (production keeps it outside the deployed code)
+data/
+*.db
+*.db-*
+
+.env
+.env.*
+.DS_Store
+.idea/
