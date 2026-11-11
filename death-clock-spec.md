@@ -136,7 +136,7 @@ When the person submits a valid name:
 - Immediately show: **"Are you a boy or a girl?"** with three buttons: **Boy**, **Girl**, **Other**.
 - At the same time, fire `POST /api/graves` in the background.
 - The buttons must look and feel fully clickable: pointer cursor, hover effect, pressed state. Clicking them does **nothing**: no feedback, no error, no navigation. Use `type="button"`.
-- After **1 second** (or when the POST response arrives, whichever is later), cut abruptly to the reveal. There is no transition or fade; it should feel like you got interrupted.
+- After **2 seconds** (or when the POST response arrives, whichever is later), cut abruptly to the reveal. There is no transition or fade; it should feel like you got interrupted.
 - If the POST fails (rate limit or other error), replace the question with the error message instead of the reveal, and let the person try again.
 
 **3. Reveal (state `alive`)**
@@ -228,8 +228,8 @@ The following are intentionally not part of this project:
 ## Acceptance checklist
 
 - [ ] A new visitor sees only the landing page. There is no hint of the graveyard.
-- [ ] Submitting a name shows the gender question for about 1 second; the buttons look clickable but do nothing.
-- [ ] The reveal says "NAME, you will die in X seconds" with X between roughly 29 and 59, with no countdown.
+- [ ] Submitting a name shows the gender question for about 2 seconds; the buttons look clickable but do nothing.
+- [ ] The reveal says "NAME, you will die in X seconds" with X between roughly 28 and 59, with no countdown.
 - [ ] Refreshing before death shows the same reveal with a smaller number.
 - [ ] Refreshing after death shows the tombstone (name and time of death) and a link to `/graveyard`.
 - [ ] Clearing cookies returns the visitor to the landing page.

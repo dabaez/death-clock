@@ -1,6 +1,6 @@
 import { cleanName, tombstone } from './common.js';
 
-const QUESTION_MS = 1000;
+const QUESTION_MS = 2000;
 
 const $ = (id) => document.getElementById(id);
 const screens = ['landing', 'question', 'reveal', 'dead'];
